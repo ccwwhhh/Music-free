@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>复古报纸排版</title>
+<!-- 引入谷歌字体以增强复古感 -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-color: #f4f1ea;
+        --ink-color: #2f2f2f;
+        --accent-color: #8b0000; /*以此深红为强调色*/
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--ink-color);
+        font-family: 'Noto Serif SC', 'Georgia', serif;
+        margin: 0;
+        padding: 40px 20px;
+        line-height: 1.6;
+    }
+
+    .newspaper-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        /* 模拟纸张纹理 */
+        background-image: linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, .02) 25%, rgba(0, 0, 0, .02) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .02) 75%, rgba(0, 0, 0, .02) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, .02) 25%, rgba(0, 0, 0, .02) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .02) 75%, rgba(0, 0, 0, .02) 76%, transparent 77%, transparent);
+        background-size: 50px 50px;
+        background-color: var(--bg-color);
+    }
+
+    /* 报头区域 */
+    header {
+        text-align: center;
+        border-bottom: 4px double var(--ink-color);
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    .meta-info {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid var(--ink-color);
+        border-bottom: 1px solid var(--ink-color);
+        padding: 5px 0;
+        margin: 10px 0;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    h1.brand-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 4rem;
+        margin: 10px 0;
+        text-transform: uppercase;
+        letter-spacing: -2px;
+        line-height: 1;
+    }
+
+    /* 主要内容布局 */
+    .main-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+    }
+
+    /* 大标题 */
+    .headline {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 1.1;
+        margin: 0 0 20px 0;
+        text-align: left;
+    }
+
+    /* 图片样式 */
+    .featured-image-container {
+        width: 100%;
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .featured-image {
+        width: 100%;
+        height: auto;
+        filter: grayscale(100%) sepia(20%); /* 复古滤镜 */
+        border: 1px solid #000;
+        display: block;
+    }
+
+    .caption {
+        font-size: 0.8rem;
+        font-style: italic;
+        margin-top: 5px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+    }
+
+    /* 正文多栏排版 */
+    .article-body {
+        column-count: 2;
+        column-gap: 30px;
+        text-align: justify;
+    }
+
+    /* 首字下沉 */
+    .article-body p:first-of-type::first-letter {
+        font-size: 4rem;
+        float: left;
+        line-height: 0.8;
+        padding-right: 10px;
+        padding-top: 5px;
+        font-family: 'Playfair Display', serif;
+        font-weight: bold;
+    }
+
+    /* 侧边栏 */
+    .sidebar {
+        border-left: 1px solid var(--ink-color);
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .sub-story h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        margin-top: 0;
+        border-bottom: 2px solid var(--ink-color);
+    }
+
+    .quote-box {
+        background: #e8e4da;
+        padding: 15px;
+        border: 1px solid var(--ink-color);
+        font-style: italic;
+        font-weight: bold;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    @media (max-width: 768px) {
+        .main-grid { grid-template-columns: 1fr; }
+        .sidebar { border-left: none; border-top: 4px double var(--ink-color); padding-left: 0; padding-top: 20px;}
+        .article-body { column-count: 1; }
+        h1.brand-name { font-size: 2.5rem; }
+    }
+</style>
+</head>
+<body>
+
+<div class="newspaper-container">
+    <header>
+        <div class="meta-info">
+            <span></span>          <!-- 例：Vol. 24, No. 5 -->
+            <span></span>            <!-- 例：2024年 5月 20日, 星期一 -->
+            <span></span>           <!-- 例：定价: ¥1.00 -->
+        </div>
+        <h1 class="brand-name"></h1> <!-- 例：每日先锋报 -->
+        <div class="meta-info" style="border-top:none; justify-content: center;">
+                                 <!-- 例：THE DAILY VANGUARD GAZETTE -->
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <!-- 主要文章区域 -->
+        <article class="main-story">
+            <h2 class="headline">Kim Gordon announces new album ‘Play Me’ with captivating single ‘Not Today’</h2>
+
+            <div class="featured-image-container">
+                <img src="https://www.nme.com/wp-content/uploads/2026/01/kim-gordon@2000x1270.jpg" alt="News Image" class="featured-image">
+                <div class="caption">Kim Gordon announces new album ‘Play Me’ with captivating single ‘Not Today’ – Rolling Stone</div>
+            </div>
+
+            <div class="article-body">
+                
+                
+                <p>Kim Gordonhas announced a new album called ‘Play Me’, and released the expressive lead single ‘Not Today’. Check it out below.</p>
+                
+                <p>The record marks the third solo release from the Free Kitten and formerSonic Youthstar, and it will be released on March 13 by Matador Records.Visit here to pre-order.</p>
+                
+                <p>According to a new press release, the record is both “distilled and immediate”, and sees the artist expanding her musical horizons to include more-melodic beats, alongside the motorik drive of krautrock.</p>
+                
+                <p>“We wanted the songs to be short,” Gordon said, discussing the collaboration with producer Justin Raisen (Charli XCX,Sky Ferreira,Yves Tumor). “We wanted to do it really fast. It’s more focused, and maybe more confident. I always kind of work off of rhythms, and I knew I wanted it to be even more beat-oriented than the last one. Justin really gets my voice and my lyrics and he understands how I work—that came forth even more on this record.”</p>
+                
+                <p>Today (Wednesday January 14), Gordon has shared the first taster of the new LP in the form of lead single ‘Not Today’.</p>
+                
+                <p>The track swirls in with distorted guitars and atmospheric, withdrawn instrumentals, before Gordon layers her distinctive vocals over the top. It captures a poetic tension in the singer’s voice that she had not harnessed for a while. “I started singing in a way I hadn’t sung in a long time,” she explained. “This other voice came out.”</p>
+                
+                <p>Check out the song above, which also comes accompanied by a short film directed by Rodarte fashion label founders and filmmakers Kate and Laura Mulleavy. In the video, Gordon wears a hand-dyed silk dress from an early Rodarte collection, custom-made for her by the Mulleavys.</p>
+                
+                <p>As for the album as a whole, ‘Play Me’ follows on from Gordon’s 2019 debut solo album‘No Home Record’, as well as from her more daring 2024 sophomore album, ‘The Collective’.</p>
+                
+                <p>For the forthcoming release, Gordon turns her sights to the issues she sees within society, including the rise of AI technology, the current political climate, and the collateral damage of the billionaire class.</p>
+                
+                <p>The outward-looking approach is also contrasted by a new sense of emotion throughout the tracklist, which sees the singer reject overarching, definitive statements, and instead hold onto a sense of inquisitiveness and individuality.</p>
+                
+                <p>“I have to say, the thing that influenced me most was the news. We are in some kind of ‘post empire’ now, where people just disappear,” she shared. “It’s sort of part and parcel of the convenience culture that we live in, where our choices are kind of curated all the time.</p>
+                
+                <p>“Things are branded in a way that tries to predict what your mood is before you have a mood. I find that interesting, and also really offensive.”</p>
+                
+                <p>Kim Gordon, ‘Play Me’ album cover. CREDIT: Press</p>
+                
+                <p>Tracks including ‘Subcon’ take aim at billionaires and would-be space colonisers, while ‘No Hands’ captures the recklessness of the US national mood. Elsewhere, tracks like ‘Dirty Tech’ conveys a sense of pity for those caught up in AI and highlights the environmental impact it is having.</p>
+                
+                <p>For the final song on the album,‘ByeBye25’, Kim remakes the opening track from ‘The Collective’ and incorporates new lyrics from Trump’s banned-words list. These are terms the administration has flagged to cancel grant and research proposals, and range from “they/them,” “climate change,” and “uterus”, to “bird flu,” “peanut allergy,” and “tile drainage”.</p>
+                
+                <p>In 2019,NMEspoke with Gordonabout Trump, capitalism, and rock ‘n’ roll. When asked about the message of her debut solo album ‘No Home Record’, she said: “The message of the record is that the end of capitalism is coming and that Trump is going to be the person who drives it into the ground.”</p>
+                
+                <p>“I remember when the [Berlin] Wall came down and this general feeling in the ‘Western World was that Communism didn’t work and that this proves it’. What came out of it was just lots of corruption, and we’re just that way already with lots of corruption,” she added.</p>
+                
+                <p>Ina four-star review of Gordon’s ‘The Collective’,NMEwrote: “Here the 70-year-old balances her less than commercial sensibilities with crunchily on-trend production and relatable lyrics about rotten capitalism and fragile masculinity – if these sound like themes she explored during Sonic Youth’s ‘90s heyday, it only goes to show how little has changed.”</p>
+                
+                <p>“It’s notable, though, how contemporary her distorted art-punk sounds, given the ongoing grunge resurgence and the fact thatOlivia Rodrigo’s takingThe Breederson tour this year. Despite her new album’s title, here is an icon who’s spent more than four decades making truly individual art.”</p>
+                
+                <p>‘The Collective’ was also named asone of the best albums of 2024so far, described in a nutshell as “a clangorous, cutting experiment with trap beats and abrasive noise”.</p>
+                
+            </div>
+        </article>
+
+        <!-- 侧边栏区域 -->
+        <aside class="sidebar">
+            <div class="sub-story">
+                <h3>Summary</h3>
+                <img src=""
+                     style="width:100%; filter:grayscale(100%); margin-bottom:10px;">
+                <p>“It’s more focused, and maybe more confident”</p>
+            </div>
+
+            <div class="quote-box">
+                "https://www.nme.com/news/music/kim-gordon-announces-new-album-play-me-with-captivating-single-not-today-3923061?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=kim-gordon-announces-new-album-play-me-with-captivating-single-not-today"
+            </div>
+
+            <div class="sub-story">
+                <h3></h3>
+                <p></p>
+            </div>
+        </aside>
+    </div>
+</div>
+</body>
+</html>

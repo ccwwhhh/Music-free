@@ -1,0 +1,17 @@
+# IDE / 编辑器
+.idea/
+*.log
+__pycache__/
+*.pyc
+
+# 本地二进制工具，不上传
+ffmpeg-*/
+wkhtmltopdf/
+
+
+
+# 大的音色库文件（如不想上传）
+music/agents/FluidR3_GM.sf2
+
+# 其他你不想进仓库的本地配置
+.env
