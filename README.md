@@ -17,6 +17,7 @@ based on https://github.com/openagents-org/openagents
 - **新闻检索**：检索音乐新闻并排版生成海报
 
 ###使用的Agent
+agent主体位于 .../music/agents 下
 | 名字  |  功能 |  响应方式  |
 | ------------ | ------------ |------------ |
 | SoundRender | 修改音色，弹奏乐器，弹奏速度  | @SoundRender后响应  |
