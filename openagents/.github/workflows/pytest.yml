@@ -1,0 +1,54 @@
+name: Python Tests
+
+on:
+  push:
+    branches: [ main, master, develop, test-ci ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20  # Add timeout to prevent long-running tests
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov pytest-asyncio
+        pip install -e .
+        
+    - uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+        
+    - name: Test with pytest (unit tests)
+      env:
+        SOME_ENV_VAR: "value"
+        # Enforce sequential execution and stability
+        PYTHONHASHSEED: "0"
+        GRPC_ENABLE_FORK_SUPPORT: "1"
+        GRPC_POLL_STRATEGY: "poll"
+      run: |
+        # Run tests sequentially (no -n flag to ensure no parallelism)
+        pytest --tb=short --maxfail=5 -v tests
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: false 

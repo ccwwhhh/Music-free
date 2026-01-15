@@ -1,0 +1,34 @@
+name: Publish Studio to NPM
+
+on:
+  push:
+    branches: [ release ]
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Install dependencies
+      working-directory: ./studio
+      run: npm ci
+
+    - name: Build package
+      working-directory: ./studio
+      # Explicitly set CI=false to prevent treating warnings as errors
+      run: CI=false npm run build
+
+    - name: Publish to npm
+      working-directory: ./studio
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npm publish --access public

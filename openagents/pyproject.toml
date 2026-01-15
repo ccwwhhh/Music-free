@@ -1,0 +1,188 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openagents"
+version = "0.7.8"
+description = "A flexible framework for building multi-agent systems with customizable protocols"
+readme = "README.md"
+authors = [
+    {name = "OpenAgents Team", email = "info@openagents.org"}
+]
+license = {text = "Apache-2.0"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: System :: Distributed Computing",
+]
+requires-python = ">=3.8"
+dependencies = [
+    # Core framework dependencies
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+    "typing-extensions>=4.4.0",
+    "packaging>=21.0",
+    
+    # Async and networking
+    "aiohttp>=3.9.0",
+    "websockets>=11.0",
+    "asyncio-throttle>=1.0.0",
+    "requests>=2.25.0",
+    
+    # Transport layer dependencies
+    "grpcio>=1.50.0",          # gRPC transport support
+    "grpcio-tools>=1.50.0",    # gRPC code generation
+    
+    # Security and encryption
+    "cryptography>=40.0.0",    # Encryption for secure communications
+    "pynacl>=1.5.0",          # Fast cryptography for P2P
+    
+    # CLI and user interface
+    "click>=8.1.0",           # Enhanced CLI framework
+    "rich>=13.0.0",           # Rich terminal output
+    "typer>=0.9.0",           # Modern CLI framework
+    
+    # Configuration and templating  
+    "jinja2>=3.1.0",          # Template engine
+    "python-dotenv>=1.0.0",   # Environment configuration
+    
+    # Monitoring and observability
+    "prometheus-client>=0.16.0",  # Metrics collection
+    "structlog>=23.0.0",          # Structured logging
+
+    # MCP (Model Context Protocol) integration
+    "mcp>=1.15.0",                # Model Context Protocol library
+
+    # Others
+    "openai>=1.98" # For CLI
+]
+
+[project.optional-dependencies]
+# P2P networking (optional, for future libp2p integration)
+p2p = [
+    "py-libp2p>=0.2.0",       # P2P networking library
+]
+
+# WebRTC support (optional, for future WebRTC transport)
+webrtc = [
+    "aiortc>=1.6.0",          # WebRTC implementation
+]
+
+# LangChain integration (optional)
+langchain = [
+    "langchain>=0.2.0",           # LangChain core framework
+    "langchain-core>=0.2.0",      # LangChain core components
+    "langchain-openai>=0.1.0",    # OpenAI integration for LangChain
+]
+
+# Development dependencies
+dev = [
+    # Testing framework
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",            # Additional mocking utilities
+    "pytest-xdist>=3.3.0",           # Parallel test execution
+    
+    # Code quality
+    "black>=23.7.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "pre-commit>=3.3.0",
+    "coverage>=7.3.0",
+    
+    # Development utilities
+    "ipython>=8.0.0",                 # Interactive development
+    "jupyter>=1.0.0",                 # Notebook support
+]
+
+# Documentation dependencies
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.2.0",
+    "mkdocs-mermaid2-plugin>=1.1.0",
+    "mkdocstrings[python]>=0.22.0",
+]
+
+# All optional dependencies
+all = [
+    "openagents[p2p,webrtc,langchain,dev,docs]",
+]
+
+[project.urls]
+Homepage = "https://github.com/bestagents/openagents"
+Documentation = "https://openagents.readthedocs.io"
+Repository = "https://github.com/bestagents/openagents"
+Issues = "https://github.com/bestagents/openagents/issues"
+
+[project.scripts]
+openagents = "openagents.cli:cli_main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+openagents = [
+    "protocols/*/protocol_manifest.json",
+    "configs/*.yaml",
+    "templates/**/*",
+    "templates/default_network/**/*",
+    "templates/default_network/agents/*",
+    "studio/build/**/*"
+]
+
+# Pytest configuration
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = [
+    "-ra",                      # Show extra test summary
+    "--strict-markers",         # Treat unregistered markers as errors
+    "--strict-config",          # Treat config issues as errors  
+    "--disable-warnings",       # Disable most warnings for cleaner output
+]
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+    "ignore::RuntimeWarning:asyncio",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src/openagents"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__init__.py",
+    "*/conftest.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
