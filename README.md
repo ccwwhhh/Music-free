@@ -6,9 +6,13 @@ based on https://github.com/openagents-org/openagents
 
 ## 功能特点
 ### 基础功能（在原openagents基础上增加）
-- **录音** 
+- **录音**
 - **音频文件生成**
- 
+ - 修改位置：
+ - ...\music_free\openagents\studio\src\pages\messaging\components\MessageRenderer.tsx
+ - ...\music_free\openagents\studio\src\pages\messaging\components\MessageInput.tsx
+ - ...\music_free\openagents\studio\src\utils\praseJianpuToken.ts
+ - ...
 ### 进阶功能
 - **想法记录**：用户在聊天频道通过录音功能内哼歌
 - **音频规范**：分析用户音频，生成格式化midi文件
