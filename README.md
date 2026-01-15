@@ -1,6 +1,8 @@
 # Music-free——基于Openagents的multi-agents音乐创作项目
 
 based on https://github.com/openagents-org/openagents
+##项目简介
+基于用户音频输入的多维agent音乐创作系统。作为非音乐专业人士，用户在日常生活中存在哼歌等自由创作的需求。本项目支持对用户的随机哼唱进行实时趣味创作，分析生成电子简谱以及midi音乐文件。此外，通过多个agent交互，用户可以改变简谱的音色音质，加入伴奏等。该创作系统与实时查询音乐新闻的辅助功能相结合，形成一个高效音乐插件。
 
 ## 功能特点
 ###基础功能（在原openagents基础上增加）
