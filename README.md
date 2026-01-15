@@ -5,7 +5,7 @@ based on https://github.com/openagents-org/openagents
 基于用户音频输入的多维agent音乐创作系统。作为非音乐专业人士，用户在日常生活中存在哼歌等自由创作的需求。本项目支持对用户的随机哼唱进行实时趣味创作，分析生成电子简谱以及midi音乐文件。此外，通过多个agent交互，用户可以改变简谱的音色音质，加入伴奏等。该创作系统与实时查询音乐新闻的辅助功能相结合，形成一个高效音乐插件。
 
 ## 功能特点
-###基础功能（在原openagents基础上增加）
+### 基础功能（在原openagents基础上增加）
 - **录音** 
 - **音频文件生成**
  
@@ -24,7 +24,7 @@ based on https://github.com/openagents-org/openagents
 | Max   | 生成格式一致的下一段乐谱  |  @Max后响应 |
 | MusicWorker  |  生成电子简谱，可播放 |  上传文件后自动响应，分析音频 |
 |  News-hunter |  爬取音乐相关新闻并生成海报 |  每隔1min触发，在music-news窗口中 |
-agent主体位于 .../music/agents 下
+注：agent主体位于 .../music/agents 下
 ## 快速开始
 
 
